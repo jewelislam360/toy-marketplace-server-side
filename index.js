@@ -69,6 +69,37 @@ async function run() {
       console.log(result);
       res.send(result);
     })
+  
+
+
+    app.get('/allToys/:id', async(req, res)=>{
+      const id = req.params.id;
+      const query={_id: new ObjectId(id)};
+      const result = await toysCollection.findOne(query);
+      console.log(result);
+      res.send(result);
+    })
+
+    app.put('/allToys/:id', async(req, res)=>{
+      const id = req.params.id;
+      const filter={_id: new ObjectId(id)};
+      const option={upsert: true};
+      const updateToys=req.body;
+      const updateToy={
+        $set:{
+          quantity: updateToys.quantity,
+           price: updateToys.price,
+           description: updateToys.description
+
+        }
+        
+      }
+      const result = await toysCollection.updateOne(filter, option, updateToy);
+      console.log(result);
+      res.send(result);
+    })
+
+
 
 
     // Send a ping to confirm a successful connection
