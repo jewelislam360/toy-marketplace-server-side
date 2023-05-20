@@ -36,12 +36,18 @@ async function run() {
         const body = req.body;
         const result = await toysCollection.insertOne(body);
         console.log(body);
-        res.send(body);
+        res.send(result);
     })
 
     app.get('/allToys', async(req, res)=>{
         const result =await toysCollection.find({}).toArray();
         res.send(result);
+    })
+
+    app.get('/myToys/:email', async(req, res)=>{
+      const email = req.params.email;
+      const result = await toysCollection.find({email: email}).toArray();
+      res.send(result);
     })
 
 
