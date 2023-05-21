@@ -83,7 +83,7 @@ async function run() {
     app.put('/allToys/:id', async(req, res)=>{
       const id = req.params.id;
       const filter={_id: new ObjectId(id)};
-      const option={upsert: true};
+      const options = { upsert: true };
       const updateToys=req.body;
       const updateToy={
         $set:{
@@ -94,7 +94,7 @@ async function run() {
         }
         
       }
-      const result = await toysCollection.updateOne(filter, option, updateToy);
+      const result = await toysCollection.updateOne(filter, updateToy, options);
       console.log(result);
       res.send(result);
     })
